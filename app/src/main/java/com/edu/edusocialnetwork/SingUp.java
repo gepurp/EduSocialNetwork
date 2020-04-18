@@ -8,15 +8,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
-public class SingUp extends AppCompatActivity  implements View.OnClickListener {
+public class SingUp extends AppCompatActivity {
 
     // UI Components
-    private TextView edtFirstName, edtSecondName, edtAge, edtGender;
+    private TextView edtFirstName, edtSecondName, edtAge, edtGender, txtGetData;
     private Button btnSubmit;
 
     @Override
@@ -30,14 +32,27 @@ public class SingUp extends AppCompatActivity  implements View.OnClickListener {
         edtAge = findViewById(R.id.edtAge);
         edtGender = findViewById(R.id.edtGender);
 
+        txtGetData = findViewById(R.id.txtGetData);
+
         btnSubmit = findViewById(R.id.btnSubmit);
 
-        // Setting onclick listener on submit button
-        btnSubmit.setOnClickListener(this);
+        txtGetData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("UserSave");
+                parseQuery.getInBackground("moqgJjputF", new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (object != null && e == null) {
+                            txtGetData.setText(String.format("%s%s%s", object.get("FirstName"), " ", object.get("SecondName")));
+                        }
+                    }
+                });
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
+    public void submitClicked(View v) {
         try {
             final ParseObject userSave = new ParseObject("UserSave");
             userSave.put("FirstName", edtFirstName.getText().toString());
