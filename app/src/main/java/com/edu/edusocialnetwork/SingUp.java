@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class SingUp extends AppCompatActivity  implements View.OnClickListener {
 
@@ -43,9 +44,15 @@ public class SingUp extends AppCompatActivity  implements View.OnClickListener {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(SingUp.this, "UserSave saved successfully", Toast.LENGTH_LONG).show();
+                    FancyToast.makeText(SingUp.this,
+                            "UserSave saved successfully",
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.SUCCESS, true).show();
                 } else {
-                    Toast.makeText(SingUp.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    FancyToast.makeText(SingUp.this,
+                            e.getMessage(),
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.ERROR, true).show();
                 }
             }
         });
