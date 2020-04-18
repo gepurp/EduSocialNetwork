@@ -15,6 +15,7 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class SingUp extends AppCompatActivity  implements View.OnClickListener {
 
+    // UI Components
     private TextView edtFirstName, edtSecondName, edtAge, edtGender;
     private Button btnSubmit;
 
@@ -23,6 +24,7 @@ public class SingUp extends AppCompatActivity  implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Define UI components
         edtFirstName = findViewById(R.id.edtFirstName);
         edtSecondName = findViewById(R.id.edtSecondName);
         edtAge = findViewById(R.id.edtAge);
@@ -30,32 +32,42 @@ public class SingUp extends AppCompatActivity  implements View.OnClickListener {
 
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        // Setting onclick listener on submit button
         btnSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        ParseObject userSave = new ParseObject("UserSave");
-        userSave.put("FirstName", edtFirstName.getText().toString());
-        userSave.put("SecondName", edtSecondName.getText().toString());
-        userSave.put("Age", edtAge.getText().toString());
-        userSave.put("Gender", edtGender.getText().toString());
-        userSave.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    FancyToast.makeText(SingUp.this,
-                            "UserSave saved successfully",
-                            FancyToast.LENGTH_LONG,
-                            FancyToast.SUCCESS, true).show();
-                } else {
-                    FancyToast.makeText(SingUp.this,
-                            e.getMessage(),
-                            FancyToast.LENGTH_LONG,
-                            FancyToast.ERROR, true).show();
+        try {
+            final ParseObject userSave = new ParseObject("UserSave");
+            userSave.put("FirstName", edtFirstName.getText().toString());
+            userSave.put("SecondName", edtSecondName.getText().toString());
+            userSave.put("Age", edtAge.getText().toString());
+            userSave.put("Gender", edtGender.getText().toString());
+            userSave.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        FancyToast.makeText(SingUp.this,
+                                userSave.get("FirstName") + " saved successfully",
+                                FancyToast.LENGTH_LONG,
+                                FancyToast.SUCCESS, true).show();
+                    } else {
+                        FancyToast.makeText(SingUp.this,
+                                e.getMessage(),
+                                FancyToast.LENGTH_LONG,
+                                FancyToast.ERROR, true).show();
+                    }
                 }
-            }
-        });
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            FancyToast.makeText(SingUp.this,
+                    e.getMessage(),
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.ERROR, true).show();
+        }
     }
 
 /*
