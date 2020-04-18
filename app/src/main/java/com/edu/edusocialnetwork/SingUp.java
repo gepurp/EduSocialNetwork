@@ -44,6 +44,8 @@ public class SingUp extends AppCompatActivity  implements View.OnClickListener {
             public void done(ParseException e) {
                 if (e == null) {
                     Toast.makeText(SingUp.this, "UserSave saved successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(SingUp.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
