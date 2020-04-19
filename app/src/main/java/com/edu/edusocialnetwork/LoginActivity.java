@@ -2,6 +2,7 @@ package com.edu.edusocialnetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -54,9 +55,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnLoginActivity:
 
                 // Adding the progress dialog for indicating the log in process to the user
-                /*
-                Have to add some code here for showing the progress dialog...
-                 */
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Logging in the " + edtEmailLogin.getText().toString());
+                progressDialog.show();
 
                 // Logging in the user in new thread with callback message
                 ParseUser.logInInBackground(edtEmailLogin.getText().toString(),
@@ -78,6 +79,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     FancyToast.ERROR,
                                     true).show();
                         }
+                        // Dismissing the progress dialog after sing up process
+                        progressDialog.dismiss();
                     }
                 });
                 break;
