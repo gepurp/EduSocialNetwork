@@ -62,6 +62,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
 
             case R.id.btnSingUp:
                 // Condition for checking the values for credentials
+                // Showing message to a user if some line has empty value
                 if (edtEnterEmail.getText().toString().equals("") ||
                         edtEnterUserName.getText().toString().equals("") ||
                         edtEnterPassword.getText().toString().equals("")) {
@@ -121,10 +122,11 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
+
     // When user tapped on the empty space keyboard will be hide
     // Need to use InputMethodManager for it... I have no idea how to do it... yet...
-
-    public void rootLayoutTapped(View view) {
+    public void singUpRootLayoutTapped(View view) {
+        // Something here works not really fine... But I don't know what exactly... yet
         try {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

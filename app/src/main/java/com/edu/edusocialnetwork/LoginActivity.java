@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,36 +54,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.btnLoginActivity:
+                // Condition for checking the values for credentials
+                // Showing message to a user if some line has empty value
+                if (edtEmailLogin.getText().toString().equals("") ||
+                        edtPasswordLogin.getText().toString().equals("")) {
 
-                // Adding the progress dialog for indicating the log in process to the user
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("Logging in the " + edtEmailLogin.getText().toString());
-                progressDialog.show();
+                    FancyToast.makeText(LoginActivity.this,
+                            "Empty values are not allowed",
+                            Toast.LENGTH_LONG,
+                            FancyToast.INFO,
+                            true).show();
+                } else {
 
-                // Logging in the user in new thread with callback message
-                ParseUser.logInInBackground(edtEmailLogin.getText().toString(),
-                        edtPasswordLogin.getText().toString(),
-                        new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if (user != null && e == null) {
-                            // Making the success message if the exception didn't throw
-                            FancyToast.makeText(LoginActivity.this,
-                                    user.getUsername() + " logged in successfully",
-                                    Toast.LENGTH_LONG, FancyToast.SUCCESS,
-                                    true).show();
-                        } else {
-                            // Making the error message if the exception was thrown
-                            FancyToast.makeText(LoginActivity.this,
-                                    "There was an error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG,
-                                    FancyToast.ERROR,
-                                    true).show();
-                        }
-                        // Dismissing the progress dialog after sing up process
-                        progressDialog.dismiss();
-                    }
-                });
+                    // Adding the progress dialog for indicating the log in process to the user
+                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("Logging in the " + edtEmailLogin.getText().toString());
+                    progressDialog.show();
+
+                    // Logging in the user in new thread with callback message
+                    ParseUser.logInInBackground(edtEmailLogin.getText().toString(),
+                            edtPasswordLogin.getText().toString(),
+                            new LogInCallback() {
+                                @Override
+                                public void done(ParseUser user, ParseException e) {
+                                    if (user != null && e == null) {
+                                        // Making the success message if the exception didn't throw
+                                        FancyToast.makeText(LoginActivity.this,
+                                                user.getUsername() + " logged in successfully",
+                                                Toast.LENGTH_LONG, FancyToast.SUCCESS,
+                                                true).show();
+                                    } else {
+                                        // Making the error message if the exception was thrown
+                                        FancyToast.makeText(LoginActivity.this,
+                                                "There was an error: " + e.getMessage(),
+                                                Toast.LENGTH_LONG,
+                                                FancyToast.ERROR,
+                                                true).show();
+                                    }
+                                    // Dismissing the progress dialog after sing up process
+                                    progressDialog.dismiss();
+                                }
+                            });
+                }
                 break;
 
             case R.id.btnSingUpLoginActivity:
@@ -92,6 +105,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
 
                 break;
+        }
+    }
+
+    // When user tapped on the empty space keyboard will be hide
+    public void loginRootLayoutTapped(View view) {
+        try {
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
