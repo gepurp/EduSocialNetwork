@@ -2,10 +2,12 @@ package com.edu.edusocialnetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,11 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         btnSingUp.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
+        // Log out the current user ???
+        // Have to read more about token session !!!
+        if (ParseUser.getCurrentUser() != null) {
+            ParseUser.getCurrentUser().logOut();
+        }
     }
 
     @Override
@@ -55,6 +62,11 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                 appUser.setEmail(edtEnterEmail.getText().toString());
                 appUser.setUsername(edtEnterUserName.getText().toString());
                 appUser.setPassword(edtEnterPassword.getText().toString());
+
+                // Adding the progress dialog for indicating the sing up process to the user
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Singing up the " + edtEnterUserName.getText().toString());
+                progressDialog.show(); // Have to dismiss progress dialog after sign up
 
                 // Signing up the user in new thread with callback message
                 appUser.signUpInBackground(new SignUpCallback() {
@@ -75,6 +87,9 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                                     FancyToast.ERROR,
                                     true).show();
                         }
+
+                        // Dismissing the progress dialog after sing up process
+                        progressDialog.dismiss();
                     }
                 });
                 break;
