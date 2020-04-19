@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         edtEnterUserName = findViewById(R.id.edtEnterUserName);
         edtEnterPassword = findViewById(R.id.edtEnterPassword);
         /*
-        Maybe I should add the onKeyListener for edtEnterPassword.
+        Maybe I should add the onKeyListener for edtEnterPassword... or maybe not...
         Then user can sing up by clicking 'return' key on the phone keyboard.
          */
 
@@ -118,6 +119,18 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
 
                 break;
 
+        }
+    }
+    // When user tapped on the empty space keyboard will be hide
+    // Need to use InputMethodManager for it... I have no idea how to do it... yet...
+
+    public void rootLayoutTapped(View view) {
+        try {
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
