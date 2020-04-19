@@ -36,6 +36,10 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         edtEnterEmail = findViewById(R.id.edtEnterEmail);
         edtEnterUserName = findViewById(R.id.edtEnterUserName);
         edtEnterPassword = findViewById(R.id.edtEnterPassword);
+        /*
+        Maybe I should add the onKeyListener for edtEnterPassword.
+        Then user can sing up by clicking 'return' key on the phone keyboard.
+         */
 
         btnSingUp = findViewById(R.id.btnSingUp);
         btnLogin = findViewById(R.id.btnLogin);
@@ -56,42 +60,54 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.btnSingUp:
+                // Condition for checking the values for credentials
+                if (edtEnterEmail.getText().toString().equals("") ||
+                        edtEnterUserName.getText().toString().equals("") ||
+                        edtEnterPassword.getText().toString().equals("")) {
 
-                // Set the user credentials after sing up button clicked
-                final ParseUser appUser = new ParseUser();
-                appUser.setEmail(edtEnterEmail.getText().toString());
-                appUser.setUsername(edtEnterUserName.getText().toString());
-                appUser.setPassword(edtEnterPassword.getText().toString());
+                    FancyToast.makeText(SingUp.this,
+                            "Empty values are not allowed",
+                            Toast.LENGTH_LONG,
+                            FancyToast.INFO,
+                            true).show();
+                } else {
 
-                // Adding the progress dialog for indicating the sing up process to the user
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("Singing up the " + edtEnterUserName.getText().toString());
-                progressDialog.show(); // Have to dismiss progress dialog after sign up
+                    // Set the user credentials after sing up button clicked
+                    final ParseUser appUser = new ParseUser();
+                    appUser.setEmail(edtEnterEmail.getText().toString());
+                    appUser.setUsername(edtEnterUserName.getText().toString());
+                    appUser.setPassword(edtEnterPassword.getText().toString());
 
-                // Signing up the user in new thread with callback message
-                appUser.signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            // Making the success message if the exception didn't throw
-                            FancyToast.makeText(SingUp.this,
-                                    appUser.getUsername() + " is signed up",
-                                    Toast.LENGTH_LONG,
-                                    FancyToast.SUCCESS,
-                                    true).show();
-                        } else {
-                            // Making the error message if the exception was thrown
-                            FancyToast.makeText(SingUp.this,
-                                    "There was an error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG,
-                                    FancyToast.ERROR,
-                                    true).show();
+                    // Adding the progress dialog for indicating the sing up process to the user
+                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("Singing up the " + edtEnterUserName.getText().toString());
+                    progressDialog.show(); // Have to dismiss progress dialog after sign up
+
+                    // Signing up the user in new thread with callback message
+                    appUser.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                // Making the success message if the exception didn't throw
+                                FancyToast.makeText(SingUp.this,
+                                        appUser.getUsername() + " is signed up",
+                                        Toast.LENGTH_LONG,
+                                        FancyToast.SUCCESS,
+                                        true).show();
+                            } else {
+                                // Making the error message if the exception was thrown
+                                FancyToast.makeText(SingUp.this,
+                                        "There was an error: " + e.getMessage(),
+                                        Toast.LENGTH_LONG,
+                                        FancyToast.ERROR,
+                                        true).show();
+                            }
+
+                            // Dismissing the progress dialog after sing up process
+                            progressDialog.dismiss();
                         }
-
-                        // Dismissing the progress dialog after sing up process
-                        progressDialog.dismiss();
-                    }
-                });
+                    });
+                }
                 break;
 
             case R.id.btnLogin:
