@@ -53,6 +53,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.btnLoginActivity:
 
+                // Adding the progress dialog for indicating the log in process to the user
+                /*
+                Have to add some code here for showing the progress dialog...
+                 */
+
                 // Logging in the user in new thread with callback message
                 ParseUser.logInInBackground(edtEmailLogin.getText().toString(),
                         edtPasswordLogin.getText().toString(),

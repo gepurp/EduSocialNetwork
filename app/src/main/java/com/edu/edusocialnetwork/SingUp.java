@@ -75,7 +75,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                         if (e == null) {
                             // Making the success message if the exception didn't throw
                             FancyToast.makeText(SingUp.this,
-                                    appUser.getUsername() + "is signed up",
+                                    appUser.getUsername() + " is signed up",
                                     Toast.LENGTH_LONG,
                                     FancyToast.SUCCESS,
                                     true).show();
