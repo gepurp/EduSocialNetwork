@@ -8,14 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
@@ -141,7 +138,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
 
     // Method for switching on social media activity after user singed up
     private void switchToSocialMediaActivity() {
-        Intent intent = new Intent(SingUp.this, SoicalMediaActivity.class);
+        Intent intent = new Intent(SingUp.this, SocialMediaActivity.class);
         startActivity(intent);
     }
 }

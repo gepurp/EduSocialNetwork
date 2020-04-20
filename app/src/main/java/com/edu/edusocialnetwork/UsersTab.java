@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UsersTag extends Fragment {
+public class UsersTab extends Fragment {
 
-    public UsersTag() {
+    public UsersTab() {
         // Required empty public constructor
     }
 

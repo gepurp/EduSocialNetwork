@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -124,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     // Method for switching on social media activity after user logged in
     private void switchToSocialMediaActivity() {
-        Intent intent = new Intent(LoginActivity.this, SoicalMediaActivity.class);
+        Intent intent = new Intent(LoginActivity.this, SocialMediaActivity.class);
         startActivity(intent);
     }
 }
