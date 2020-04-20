@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class TabAdapter extends FragmentPagerAdapter {
-    public TabAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+    public TabAdapter(@NonNull FragmentManager fm) {
+        super(fm); // Have to figure out how to use this constructor !!!
     }
 
     @NonNull
