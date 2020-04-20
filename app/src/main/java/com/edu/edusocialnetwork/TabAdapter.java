@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+// I use it but don't really understand how it works ???
+
 public class TabAdapter extends FragmentPagerAdapter {
     public TabAdapter(@NonNull FragmentManager fm) {
         super(fm); // Have to figure out how to use this constructor !!!
