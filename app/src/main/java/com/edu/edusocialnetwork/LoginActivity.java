@@ -44,7 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Log out the current user ???
         // Have to read more about token session !!!
         if (ParseUser.getCurrentUser() != null) {
-            ParseUser.getCurrentUser().logOut();
+            //ParseUser.getCurrentUser().logOut();
+            switchToSocialMediaActivity();
         }
 
     }
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.btnLoginActivity:
-                // Condition for checking the values for credentials
+                // Condition for checking the values of credentials
                 // Showing message to a user if some line has empty value
                 if (edtEmailLogin.getText().toString().equals("") ||
                         edtPasswordLogin.getText().toString().equals("")) {
@@ -83,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 user.getUsername() + " logged in successfully",
                                                 Toast.LENGTH_LONG, FancyToast.SUCCESS,
                                                 true).show();
+                                        // Calling the method for switching on social media activity
+                                        switchToSocialMediaActivity();
                                     } else {
                                         // Making the error message if the exception was thrown
                                         FancyToast.makeText(LoginActivity.this,
@@ -117,5 +120,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Method for switching on social media activity after user logged in
+    private void switchToSocialMediaActivity() {
+        Intent intent = new Intent(LoginActivity.this, SoicalMediaActivity.class);
+        startActivity(intent);
     }
 }

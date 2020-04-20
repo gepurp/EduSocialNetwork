@@ -52,7 +52,8 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         // Log out the current user ???
         // Have to read more about token session !!!
         if (ParseUser.getCurrentUser() != null) {
-            ParseUser.getCurrentUser().logOut();
+            //ParseUser.getCurrentUser().logOut();
+            switchToSocialMediaActivity();
         }
     }
 
@@ -61,7 +62,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.btnSingUp:
-                // Condition for checking the values for credentials
+                // Condition for checking the values of credentials
                 // Showing message to a user if some line has empty value
                 if (edtEnterEmail.getText().toString().equals("") ||
                         edtEnterUserName.getText().toString().equals("") ||
@@ -96,6 +97,8 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                                         Toast.LENGTH_LONG,
                                         FancyToast.SUCCESS,
                                         true).show();
+                                // Calling the method for switching on social media activity
+                                switchToSocialMediaActivity();
                             } else {
                                 // Making the error message if the exception was thrown
                                 FancyToast.makeText(SingUp.this,
@@ -126,7 +129,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
     // When user tapped on the empty space keyboard will be hide
     // Need to use InputMethodManager for it... I have no idea how to do it... yet...
     public void singUpRootLayoutTapped(View view) {
-        // Something here works not really fine... But I don't know what exactly... yet
+        // Something here works not really fine... But I don't know what exactly... yet...
         try {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -134,5 +137,11 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Method for switching on social media activity after user singed up
+    private void switchToSocialMediaActivity() {
+        Intent intent = new Intent(SingUp.this, SoicalMediaActivity.class);
+        startActivity(intent);
     }
 }
