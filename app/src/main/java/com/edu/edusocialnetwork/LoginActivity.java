@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -18,7 +18,7 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView edtEmailLogin, edtPasswordLogin;
+    private EditText edtEmailLogin, edtPasswordLogin;
     private Button btnLoginActivity, btnSingUpLoginActivity;
 
     @Override

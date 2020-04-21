@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import com.shashank.sony.fancytoastlib.FancyToast;
 public class SingUp extends AppCompatActivity implements View.OnClickListener {
 
     // UI Components
-    private TextView edtEnterEmail, edtEnterUserName, edtEnterPassword;
+    private EditText edtEnterEmail, edtEnterUserName, edtEnterPassword;
     private Button btnSingUp, btnLogin;
 
     @Override
