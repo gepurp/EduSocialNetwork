@@ -46,6 +46,37 @@ public class ProfileTab extends Fragment {
 
         final ParseUser parseUser = ParseUser.getCurrentUser();
 
+        if (parseUser.get("profileName") == null) {
+            edtProfileName.setText("");
+        } else {
+            edtProfileName.setText(parseUser.get("profileName").toString());
+        }
+
+        if (parseUser.get("profileBio") == null) {
+            edtBio.setText("");
+        } else {
+            edtBio.setText(parseUser.get("profileBio").toString());
+        }
+
+        if (parseUser.get("profileProfession") == null) {
+            edtProfession.setText("");
+        } else {
+            edtProfession.setText(parseUser.get("profileProfession").toString());
+        }
+
+        if (parseUser.get("profileHobby") == null) {
+            edtHobby.setText("");
+        } else {
+            edtHobby.setText(parseUser.get("profileHobby").toString());
+        }
+
+        if (parseUser.get("profileStatus") == null) {
+            edtStatus.setText("");
+        } else {
+            edtStatus.setText(parseUser.get("profileStatus").toString());
+        }
+
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +84,7 @@ public class ProfileTab extends Fragment {
                 parseUser.put("profileBio", edtBio.getText().toString());
                 parseUser.put("profileProfession", edtProfession.getText().toString());
                 parseUser.put("profileHobby", edtHobby.getText().toString());
-                parseUser.put("status", edtStatus.getText().toString());
+                parseUser.put("profileStatus", edtStatus.getText().toString());
 
                 parseUser.saveInBackground(new SaveCallback() {
                     @Override
