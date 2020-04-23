@@ -134,7 +134,7 @@ public class SocialMediaActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         if (e == null) {
                             FancyToast.makeText(SocialMediaActivity.this,
-                                    "Successfully Uploaded",
+                                    "Image was uploaded",
                                     Toast.LENGTH_LONG,
                                     FancyToast.SUCCESS,
                                     true).show();

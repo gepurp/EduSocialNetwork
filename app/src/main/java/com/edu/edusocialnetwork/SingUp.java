@@ -100,7 +100,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                             } else {
                                 // Making the error message if the exception was thrown
                                 FancyToast.makeText(SingUp.this,
-                                        "There was an error: " + e.getMessage(),
+                                        "Error: " + e.getMessage(),
                                         Toast.LENGTH_LONG,
                                         FancyToast.ERROR,
                                         true).show();
