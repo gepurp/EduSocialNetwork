@@ -28,7 +28,7 @@ public class UsersTab extends Fragment {
     private ListView listView;
     private ArrayList arrayList;
     private ArrayAdapter arrayAdapter;
-    private TextView textViewDownload;
+    private TextView txtDownload;
 
     public UsersTab() {
         // Required empty public constructor
@@ -41,7 +41,7 @@ public class UsersTab extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_users_tag, container, false);
 
-        textViewDownload = view.findViewById(R.id.textViewDownload);
+        txtDownload = view.findViewById(R.id.txtDownload);
         listView = view.findViewById(R.id.listView);
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter(getContext(),
@@ -62,7 +62,7 @@ public class UsersTab extends Fragment {
                         }
 
                         listView.setAdapter(arrayAdapter);
-                        textViewDownload.animate().alpha(0).setDuration(1500);
+                        txtDownload.animate().alpha(0).setDuration(1500);
                         listView.animate().alpha(1).setDuration(3000);
                     }
                 }
