@@ -141,5 +141,9 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
     private void switchToSocialMediaActivity() {
         Intent intent = new Intent(SingUp.this, SocialMediaActivity.class);
         startActivity(intent);
+
+        // Eliminating the sing up activity from the stack
+        // This will not allow the user to return to sign up activity after logging in
+        finish();
     }
 }
