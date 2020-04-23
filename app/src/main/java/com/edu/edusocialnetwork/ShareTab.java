@@ -2,6 +2,7 @@ package com.edu.edusocialnetwork;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -27,7 +28,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
+
+import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -39,6 +47,8 @@ public class ShareTab extends Fragment implements View.OnClickListener {
     private ImageView imgHolder;
     private EditText edtDescription;
     private Button btnShare;
+
+    Bitmap receivedImageBitmap;
 
     public ShareTab() {
         // Required empty public constructor
@@ -78,11 +88,60 @@ public class ShareTab extends Fragment implements View.OnClickListener {
                 } else {
                     getImageForShare(); // Have to implement this method !!!
                 }
-
                 break;
 
             case R.id.btnShare:
 
+                if (receivedImageBitmap != null) {
+                    if (edtDescription.getText().toString().equals("")) {
+                        FancyToast.makeText(getContext(),
+                                "You have to add description",
+                                Toast.LENGTH_LONG,
+                                FancyToast.ERROR,
+                                true).show();
+                    } else {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        receivedImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+
+                        byte[] bytes = byteArrayOutputStream.toByteArray();
+                        ParseFile parseFile = new ParseFile("pic.png", bytes);
+
+                        ParseObject parseObject = new ParseObject("Photo");
+                        parseObject.put("picture", parseFile);
+                        parseObject.put("image_des", edtDescription.getText().toString());
+                        parseObject.put("username", ParseUser.getCurrentUser().getUsername());
+
+                        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                        progressDialog.setMessage("Loading...");
+                        progressDialog.show();
+
+                        parseObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    FancyToast.makeText(getContext(),
+                                            "Image was uploaded",
+                                            Toast.LENGTH_LONG,
+                                            FancyToast.SUCCESS,
+                                            true).show();
+                                } else {
+                                    FancyToast.makeText(getContext(),
+                                            "Error: " + e.getMessage(),
+                                            Toast.LENGTH_LONG,
+                                            FancyToast.ERROR,
+                                            true).show();
+                                }
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                } else {
+                    FancyToast.makeText(getContext(),
+                            "You have to pick image",
+                            Toast.LENGTH_LONG,
+                            FancyToast.ERROR,
+                            true).show();;
+                }
                 break;
         }
     }
@@ -125,6 +184,7 @@ public class ShareTab extends Fragment implements View.OnClickListener {
 
         if (requestCode == 2000) {
             if (resultCode == Activity.RESULT_OK) {
+
                 try {
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -138,7 +198,7 @@ public class ShareTab extends Fragment implements View.OnClickListener {
 
                     cursor.close();
 
-                    Bitmap receivedImageBitmap = BitmapFactory.decodeFile(picturePath);
+                    receivedImageBitmap = BitmapFactory.decodeFile(picturePath);
 
                     imgHolder.setImageBitmap(receivedImageBitmap);
 
