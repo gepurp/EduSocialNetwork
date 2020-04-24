@@ -80,6 +80,10 @@ public class SocialMediaActivity extends AppCompatActivity {
             ParseUser.getCurrentUser().logOut();
             // Eliminating the social media activity from the stack
             finish();
+
+            // Switching to the sign up activity after logging out
+            Intent intent = new Intent(SocialMediaActivity.this, SingUp.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
