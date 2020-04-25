@@ -94,13 +94,13 @@ public class ProfileTab extends Fragment {
                                     "Info Updated",
                                     Toast.LENGTH_LONG,
                                     FancyToast.INFO,
-                                    true).show();
+                                    false).show();
                         } else {
                             FancyToast.makeText(getContext(),
                                     "There was an error " + e.getMessage(),
                                     Toast.LENGTH_LONG,
                                     FancyToast.ERROR,
-                                    true).show();
+                                    false).show();
                         }
                     }
                 });

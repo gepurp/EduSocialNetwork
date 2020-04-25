@@ -145,13 +145,13 @@ public class SocialMediaActivity extends AppCompatActivity {
                                     "Image was uploaded",
                                     Toast.LENGTH_LONG,
                                     FancyToast.SUCCESS,
-                                    true).show();
+                                    false).show();
                         } else {
                             FancyToast.makeText(SocialMediaActivity.this,
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG,
                                     FancyToast.ERROR,
-                                    true).show();
+                                    false).show();
                         }
                         progressDialog.dismiss();
                     }

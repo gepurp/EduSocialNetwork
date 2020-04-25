@@ -70,7 +70,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                             "Empty values are not allowed",
                             Toast.LENGTH_LONG,
                             FancyToast.INFO,
-                            true).show();
+                            false).show();
                 } else {
 
                     // Set the user credentials after sing up button clicked
@@ -94,7 +94,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                                         appUser.getUsername() + " is signed up",
                                         Toast.LENGTH_LONG,
                                         FancyToast.SUCCESS,
-                                        true).show();
+                                        false).show();
                                 // Calling the method for switching on social media activity
                                 switchToSocialMediaActivity();
                             } else {
@@ -103,7 +103,7 @@ public class SingUp extends AppCompatActivity implements View.OnClickListener {
                                         "Error: " + e.getMessage(),
                                         Toast.LENGTH_LONG,
                                         FancyToast.ERROR,
-                                        true).show();
+                                        false).show();
                             }
 
                             // Dismissing the progress dialog after sing up process

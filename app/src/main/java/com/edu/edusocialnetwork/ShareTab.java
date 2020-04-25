@@ -98,7 +98,7 @@ public class ShareTab extends Fragment implements View.OnClickListener {
                                 "You have to add description",
                                 Toast.LENGTH_LONG,
                                 FancyToast.ERROR,
-                                true).show();
+                                false).show();
                     } else {
                         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         receivedImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -123,13 +123,13 @@ public class ShareTab extends Fragment implements View.OnClickListener {
                                             "Image was uploaded",
                                             Toast.LENGTH_LONG,
                                             FancyToast.SUCCESS,
-                                            true).show();
+                                            false).show();
                                 } else {
                                     FancyToast.makeText(getContext(),
                                             "Error: " + e.getMessage(),
                                             Toast.LENGTH_LONG,
                                             FancyToast.ERROR,
-                                            true).show();
+                                            false).show();
                                 }
                                 progressDialog.dismiss();
                             }
@@ -140,7 +140,7 @@ public class ShareTab extends Fragment implements View.OnClickListener {
                             "You have to pick image",
                             Toast.LENGTH_LONG,
                             FancyToast.ERROR,
-                            true).show();;
+                            false).show();;
                 }
                 break;
         }

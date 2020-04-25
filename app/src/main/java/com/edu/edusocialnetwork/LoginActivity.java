@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             "Empty values are not allowed",
                             Toast.LENGTH_LONG,
                             FancyToast.INFO,
-                            true).show();
+                            false).show();
                 } else {
 
                     // Adding the progress dialog for indicating the log in process to the user
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         FancyToast.makeText(LoginActivity.this,
                                                 user.getUsername() + " logged in successfully",
                                                 Toast.LENGTH_LONG, FancyToast.SUCCESS,
-                                                true).show();
+                                                false).show();
                                         // Calling the method for switching on social media activity
                                         switchToSocialMediaActivity();
                                     } else {
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 "There was an error: " + e.getMessage(),
                                                 Toast.LENGTH_LONG,
                                                 FancyToast.ERROR,
-                                                true).show();
+                                                false).show();
                                     }
                                     // Dismissing the progress dialog after sing up process
                                     progressDialog.dismiss();
