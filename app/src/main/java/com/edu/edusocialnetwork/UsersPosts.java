@@ -21,7 +21,6 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.List;
@@ -106,12 +105,15 @@ public class UsersPosts extends AppCompatActivity {
                             Toast.LENGTH_LONG,
                             FancyToast.INFO,
                             false).show();
+                    finish();
+
                 } else {
                     FancyToast.makeText(UsersPosts.this,
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG,
                             FancyToast.ERROR,
                             false).show();
+                    finish();
                 }
                 // Dismiss progress dialog after loading is done
                 progressDialog.dismiss();
