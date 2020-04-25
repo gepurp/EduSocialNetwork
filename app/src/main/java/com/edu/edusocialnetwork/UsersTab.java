@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -21,11 +23,14 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import libs.mjn.prettydialog.PrettyDialog;
+import libs.mjn.prettydialog.PrettyDialogCallback;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UsersTab extends Fragment implements AdapterView.OnItemClickListener {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView listView;
     private ArrayList<String> arrayList;
@@ -51,6 +56,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
                 arrayList);
 
         listView.setOnItemClickListener(UsersTab.this);
+        listView.setOnItemLongClickListener(UsersTab.this);
 
         ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
 
@@ -83,5 +89,40 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
         intent.putExtra("username", arrayList.get(position));
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+        ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
+        parseQuery.whereEqualTo("username", arrayList.get(position));
+        parseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+
+                if (user != null && e == null) {
+                    final PrettyDialog prettyDialog = new PrettyDialog(getContext());
+
+                    prettyDialog.setTitle("User Info");
+                    prettyDialog.setMessage(user.get("profileBio") + "\n" +
+                            user.get("profileProfession") + "\n" +
+                            user.get("profileHobby") + "\n" +
+                            user.get("profileStatus"));
+                    prettyDialog.setIcon(R.drawable.person);
+                    prettyDialog.addButton("OK",
+                            R.color.pdlg_color_white,
+                            R.color.pdlg_color_blue,
+                            new PrettyDialogCallback() {
+                                @Override
+                                public void onClick() {
+                                    prettyDialog.dismiss();
+                                }
+                            });
+                    prettyDialog.show();
+                }
+            }
+        });
+
+        return false;
     }
 }
