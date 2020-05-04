@@ -134,13 +134,11 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
 
     @Override
     public void onRefresh() {
-        // Inflate the layout for this fragment
-        listView.setOnItemClickListener(UsersTab.this);
-        listView.setOnItemLongClickListener(UsersTab.this);
 
         ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
 
         parseQuery.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        parseQuery.whereNotContainedIn("username", arrayList);
 
         parseQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -150,10 +148,14 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
                         for (ParseUser user : users) {
                             arrayList.add(user.getUsername());
                         }
-
-                        listView.setAdapter(arrayAdapter);
-                        txtDownload.animate().alpha(0).setDuration(1500);
-                        listView.animate().alpha(1).setDuration(3000);
+                        arrayAdapter.notifyDataSetChanged();
+                        if (swipeContainer.isRefreshing()) {
+                            swipeContainer.setRefreshing(false);
+                        }
+                    } else {
+                        if (swipeContainer.isRefreshing()) {
+                            swipeContainer.setRefreshing(false);
+                        }
                     }
                 }
             }
