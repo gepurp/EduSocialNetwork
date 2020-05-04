@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,13 @@ import libs.mjn.prettydialog.PrettyDialogCallback;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UsersTab extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class UsersTab extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private ListView listView;
     private ArrayList<String> arrayList;
     private ArrayAdapter arrayAdapter;
     private TextView txtDownload;
+    private SwipeRefreshLayout swipeContainer;
 
     public UsersTab() {
         // Required empty public constructor
@@ -48,12 +50,16 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_users_tag, container, false);
 
+        swipeContainer = view.findViewById(R.id.swipeContainer);
+
         txtDownload = view.findViewById(R.id.txtDownload);
         listView = view.findViewById(R.id.listView);
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1,
                 arrayList);
+
+        swipeContainer.setOnRefreshListener(UsersTab.this);
 
         listView.setOnItemClickListener(UsersTab.this);
         listView.setOnItemLongClickListener(UsersTab.this);
@@ -124,5 +130,33 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
         });
 
         return false;
+    }
+
+    @Override
+    public void onRefresh() {
+        // Inflate the layout for this fragment
+        listView.setOnItemClickListener(UsersTab.this);
+        listView.setOnItemLongClickListener(UsersTab.this);
+
+        ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
+
+        parseQuery.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
+
+        parseQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+                if (e == null) {
+                    if (users.size() > 0) {
+                        for (ParseUser user : users) {
+                            arrayList.add(user.getUsername());
+                        }
+
+                        listView.setAdapter(arrayAdapter);
+                        txtDownload.animate().alpha(0).setDuration(1500);
+                        listView.animate().alpha(1).setDuration(3000);
+                    }
+                }
+            }
+        });
     }
 }
