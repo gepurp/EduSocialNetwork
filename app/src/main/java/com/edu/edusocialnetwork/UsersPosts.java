@@ -36,7 +36,7 @@ public class UsersPosts extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.linearLayout);
 
-        // ??? Don't really now how it works
+        // ??? Don't really know how it works
         Intent receivedIntentObject = getIntent();
         final String receivedUserName = receivedIntentObject.getStringExtra("username");
 
@@ -47,7 +47,7 @@ public class UsersPosts extends AppCompatActivity {
         parseQuery.whereEqualTo("username", receivedUserName);
         parseQuery.orderByDescending("createdAt");
 
-        // Sowing progress dialog while loading info from the server
+        // Showing progress dialog while loading info from the server
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
