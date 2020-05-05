@@ -9,7 +9,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -48,7 +47,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_users_tag, container, false);
+        View view = inflater.inflate(R.layout.fragment_users_tab, container, false);
 
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
@@ -92,7 +91,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         // Switch to the UsersPost activity after clicking on specific user
-        Intent intent = new Intent(getContext(), UsersPosts.class);
+        Intent intent = new Intent(getContext(), ChatActivity.class);
         intent.putExtra("username", arrayList.get(position));
         startActivity(intent);
 
