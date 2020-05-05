@@ -91,6 +91,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        // Switch to the UsersPost activity after clicking on specific user
         Intent intent = new Intent(getContext(), UsersPosts.class);
         intent.putExtra("username", arrayList.get(position));
         startActivity(intent);
@@ -100,6 +101,7 @@ public class UsersTab extends Fragment implements AdapterView.OnItemClickListene
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+        // Showing the user's info after long tap on the specific user
         ParseQuery<ParseUser> parseQuery = ParseUser.getQuery();
         parseQuery.whereEqualTo("username", arrayList.get(position));
         parseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
