@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_chat"></activity>
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".UsersPosts" />
         <activity
             android:name=".SocialMediaActivity"
