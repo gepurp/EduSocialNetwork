@@ -5,14 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -40,7 +38,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         btnChatSend.setOnClickListener(this);
 
         // Get value of the selected user
-        selectedUser = getIntent().getStringExtra("selectedUser");
+        selectedUser = getIntent().getStringExtra("username");
         // Show message about chosen chat
         FancyToast.makeText(this,
                 "Chat with " + selectedUser + " was started",
