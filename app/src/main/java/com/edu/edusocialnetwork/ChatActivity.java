@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ListView chatListView;
-    private Button btnChatSend;
+    private ImageButton btnChatSend;
     private ArrayList<String> chatMessages;
     private ArrayAdapter arrayAdapter;
     private String selectedUser;
@@ -35,6 +36,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        btnChatSend = findViewById(R.id.btnChatSend);
         btnChatSend.setOnClickListener(this);
 
         // Get value of the selected user
@@ -97,8 +99,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        /*
-
         // Creating edit text component when onClick method will be called for reducing memory usage
         final EditText edtChatMessage = findViewById(R.id.edtChatMessage);
 
@@ -125,7 +125,5 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-         */
     }
 }
