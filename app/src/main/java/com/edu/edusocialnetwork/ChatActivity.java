@@ -51,47 +51,51 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, chatMessages);
         chatListView.setAdapter(arrayAdapter);
 
-        // Trying to implement the users conversation process
-        ParseQuery<ParseObject> firstUserChatQuery = ParseQuery.getQuery("Chat");
-        ParseQuery<ParseObject> secondUserChatQuery = ParseQuery.getQuery("Chat");
+        try {
+            // Trying to implement the users conversation process
+            ParseQuery<ParseObject> firstUserChatQuery = ParseQuery.getQuery("Chat");
+            ParseQuery<ParseObject> secondUserChatQuery = ParseQuery.getQuery("Chat");
 
-        firstUserChatQuery.whereEqualTo("Sender", ParseUser.getCurrentUser().getUsername());
-        firstUserChatQuery.whereEqualTo("Recipient", selectedUser);
+            firstUserChatQuery.whereEqualTo("Sender", ParseUser.getCurrentUser().getUsername());
+            firstUserChatQuery.whereEqualTo("Recipient", selectedUser);
 
-        secondUserChatQuery.whereEqualTo("Sender", selectedUser);
-        secondUserChatQuery.whereEqualTo("Recipient", ParseUser.getCurrentUser().getUsername());
+            secondUserChatQuery.whereEqualTo("Sender", selectedUser);
+            secondUserChatQuery.whereEqualTo("Recipient", ParseUser.getCurrentUser().getUsername());
 
-        ArrayList<ParseQuery<ParseObject>> allQueries = new ArrayList<>();
-        allQueries.add(firstUserChatQuery);
-        allQueries.add(secondUserChatQuery);
+            ArrayList<ParseQuery<ParseObject>> allQueries = new ArrayList<>();
+            allQueries.add(firstUserChatQuery);
+            allQueries.add(secondUserChatQuery);
 
-        ParseQuery<ParseObject> myQuery = ParseQuery.or(allQueries); // ???
-        // Specifying the order for messages in chat view
-        myQuery.orderByAscending("createdAt");
+            ParseQuery<ParseObject> myQuery = ParseQuery.or(allQueries); // ???
+            // Specifying the order for messages in chat view
+            myQuery.orderByAscending("createdAt");
 
-        myQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
+            myQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
 
-                if (objects.size() > 0 && e == null) {
+                    if (objects.size() > 0 && e == null) {
 
-                    for (ParseObject chatObject : objects) {
-                        String message = chatObject.get("Message") + "";
+                        for (ParseObject chatObject : objects) {
+                            String message = chatObject.get("Message") + "";
 
-                        if (chatObject.get("Sender").equals(ParseUser.getCurrentUser().getUsername())) {
-                            message = ParseUser.getCurrentUser().getUsername() + ": " + message;
+                            if (chatObject.get("Sender").equals(ParseUser.getCurrentUser().getUsername())) {
+                                message = ParseUser.getCurrentUser().getUsername() + ": " + message;
+                            }
+
+                            if (chatObject.get("Sender").equals(selectedUser)) {
+                                message = selectedUser + ": " + message;
+                            }
+
+                            chatMessages.add(message);
                         }
-
-                        if (chatObject.get("Sender").equals(selectedUser)) {
-                            message = selectedUser + ": " + message;
-                        }
-
-                        chatMessages.add(message);
+                        arrayAdapter.notifyDataSetChanged();
                     }
-                    arrayAdapter.notifyDataSetChanged();
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -120,6 +124,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
                     // Clear the edit text for user's message after sending
                     edtChatMessage.setText("");
+                } else {
+                    e.printStackTrace();
                 }
             }
         });
