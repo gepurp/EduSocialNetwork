@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -19,6 +20,7 @@ import com.parse.SaveCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -58,10 +60,44 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
         secondUserChatQuery.whereEqualTo("Sender", selectedUser);
         secondUserChatQuery.whereEqualTo("Recipient", ParseUser.getCurrentUser().getUsername());
+
+        ArrayList<ParseQuery<ParseObject>> allQueries = new ArrayList<>();
+        allQueries.add(firstUserChatQuery);
+        allQueries.add(secondUserChatQuery);
+
+        ParseQuery<ParseObject> myQuery = ParseQuery.or(allQueries); // ???
+        // Specifying the order for messages in chat view
+        myQuery.orderByAscending("createdAt");
+
+        myQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                if (objects.size() > 0 && e == null) {
+
+                    for (ParseObject chatObject : objects) {
+                        String message = chatObject.get("Message") + "";
+
+                        if (chatObject.get("Sender").equals(ParseUser.getCurrentUser().getUsername())) {
+                            message = ParseUser.getCurrentUser().getUsername() + ": " + message;
+                        }
+
+                        if (chatObject.get("Sender").equals(selectedUser)) {
+                            message = selectedUser + ": " + message;
+                        }
+
+                        chatMessages.add(message);
+                    }
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
+
+        /*
 
         // Creating edit text component when onClick method will be called for reducing memory usage
         final EditText edtChatMessage = findViewById(R.id.edtChatMessage);
@@ -90,7 +126,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-
+         */
     }
 }
